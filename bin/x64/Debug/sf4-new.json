@@ -1,0 +1,102 @@
+[
+	{
+		bodyAction	: "jump",
+		distanceMin	: "10",
+		keyHold		: "t"
+	},
+	{
+		bodyAction	: "crouch",
+		distanceMax	: "55",
+		keyHold		: "g"
+	},
+	{
+		bodyAction	: "handLeftForward",
+		distanceMin	: "15",
+		keyHold		: "a"
+	},
+	{
+		bodyAction	: "handRightForward",
+		distanceMin	: "15",
+		keyHold		: "a"
+	},
+	{
+		bodyAction	: "turnLeft",
+		angleMin	: "20",
+		keyHold		: "f"
+	},
+	{
+		bodyAction	: "turnRight",
+		angleMin	: "20",
+		keyHold		: "h"
+	},
+	{
+		bodyAction	: "handLeftUp",
+		distanceMin	: "10",
+		keyHold		: "d"
+	},
+	{
+		bodyAction	: "handRightUp",
+		distanceMin	: "10",
+		keyHold		: "d"
+	},
+	{
+		bodyAction	: "handLeftAcross",
+		distanceMin	: "15",
+		keyHold		: "s"
+	},
+	{
+		bodyAction	: "handRightAcross",
+		distanceMin	: "15",
+		keyHold		: "s"
+	},
+	{
+		bodyAction	: "handLeftOut",
+		distanceMin	: "15",
+		keyHold		: "y"
+	},
+	{
+		bodyAction	: "handRightOut",
+		distanceMin	: "15",
+		keyHold		: "y"
+	},
+	{
+		bodyAction	: "handLeftDown",
+		distanceMin	: "20",
+		keyHold		: "q"
+	},
+	{
+		bodyAction	: "handRightDown",
+		distanceMin	: "20",
+		keyHold		: "e"
+	},
+	{
+		bodyAction	: "footLeftForward",
+		distanceMin	: "15",
+		keyHold		: "c"
+	},
+	{
+		bodyAction	: "footRightForward",
+		distanceMin	: "15",
+		keyHold		: "c"
+	},
+	{
+		bodyAction	: "footLeftUp",
+		distanceMin	: "15",
+		keyHold		: "x"
+	},
+	{
+		bodyAction	: "footRightUp",
+		distanceMin	: "15",
+		keyHold		: "x"
+	},
+	{
+		bodyAction	: "footLeftAcross",
+		distanceMin	: "10",
+		keyHold		: "z"
+	},
+	{
+		bodyAction	: "footRightAcross",
+		distanceMin	: "10",
+		keyHold		: "z"
+	}
+]

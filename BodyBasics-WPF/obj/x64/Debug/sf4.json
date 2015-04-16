@@ -1,0 +1,246 @@
+{
+	sets : [
+		[
+			{
+				type		: "require",
+				bodyAction	: "handLeftForward",
+				distanceMin	: "17"
+			},
+			{
+				type		: "execute",
+				keyTab		: "a"
+			}
+		],
+		[
+			{
+				type		: "require",
+				bodyAction	: "handRightForward",
+				distanceMin	: "17"
+			},
+			{
+				type		: "execute",
+				keyTab		: "a"
+			}
+		],
+		[
+			{
+				type		: "require",
+				bodyAction	: "handLeftForward",
+				distanceMin	: "17"
+			},
+			{
+				type		: "execute",
+				keyTap		: "a"
+			}
+		],
+		[
+			{
+				type		: "require",
+				bodyAction	: "handRightForward",
+				distanceMin	: "17"
+			},
+			{
+				type		: "execute",
+				keyTap		: "a"
+			}
+		],
+		[
+			{
+				type		: "require",
+				bodyAction	: "turnLeft",
+				angleMinX	: "35"
+			},
+			{
+				type		: "execute",
+				keyHold		: "f"
+			}
+		],
+		[
+			{
+				type		: "require",
+				bodyAction	: "turnRight",
+				angleMinX	: "35"
+			},
+			{
+				type		: "execute",
+				keyHold		: "h"
+			}
+		],
+		[
+			{
+				type		: "require",
+				bodyAction	: "jump",
+				distanceMin	: "10"
+			},
+			{
+				type		: "execute",
+				keyTap		: "t"
+			}
+		],
+		[
+			{
+				type		: "require",
+				bodyAction	: "handLeftUp",
+				distanceMin	: "10"
+			},
+			{
+				type		: "execute",
+				keyTap		: "d"
+			}
+		],
+		[
+			{
+				type		: "require",
+				bodyAction	: "handRightUp",
+				distanceMin	: "10"
+			},
+			{
+				type		: "execute",
+				keyTap		: "d"
+			}
+		],
+		[
+			{
+				type		: "require",
+				bodyAction	: "handLeftAcross",
+				distanceMin	: "15"
+			},
+			{
+				type		: "execute",
+				keyTap		: "s"
+			}
+		],
+		[
+			{
+				type		: "require",
+				bodyAction	: "handRightAcross",
+				distanceMin	: "15"
+			},
+			{
+				type		: "execute",
+				keyTap		: "s"
+			}
+		],
+		[
+			{
+				type		: "require",
+				bodyAction	: "handLeftOut",
+				distanceMin	: "20"
+			},
+			{
+				type		: "execute",
+				keyTap		: "y"
+			}
+		],
+		[
+			{
+				type		: "require",
+				bodyAction	: "handRightOut",
+				distanceMin	: "20"
+			},
+			{
+				type		: "execute",
+				keyTap		: "y"
+			}
+		],
+		[
+			{
+				type		: "require",
+				bodyAction	: "handLeftDown",
+				distanceMin	: "20"
+			},
+			{
+				type		: "execute",
+				keyTap		: "q"
+			}
+		],
+		[
+			{
+				type		: "require",
+				bodyAction	: "handRightDown",
+				distanceMin	: "20"
+			},
+			{
+				type		: "execute",
+				keyHold		: "e"
+			}
+		],
+		[
+			{
+				type		: "require",
+				bodyAction	: "footLeftForward",
+				distanceMin	: "15"
+			},
+			{
+				type		: "execute",
+				keyTap		: "c"
+			}
+		],
+		[
+			{
+				type		: "require",
+				bodyAction	: "footRightForward",
+				distanceMin	: "15"
+			},
+			{
+				type		: "execute",
+				keyTap		: "c"
+			}
+		],
+		[
+			{
+				type		: "require",
+				bodyAction	: "footLeftUp",
+				distanceMin	: "15"
+			},
+			{
+				type		: "execute",
+				keyTap		: "x"
+			}
+		],
+		[
+			{
+				type		: "require",
+				bodyAction	: "footRightUp",
+				distanceMin	: "15"
+			},
+			{
+				type		: "execute",
+				keyTap		: "x"
+			}
+		],
+		[
+			{
+				type		: "require",
+				bodyAction	: "footLeftAcross",
+				distanceMin	: "15"
+			},
+			{
+				type		: "execute",
+				keyTap		: "z"
+			}
+		],
+		[
+			{
+				type		: "require",
+				bodyAction	: "footRightAcross",
+				distanceMin	: "15"
+			},
+			{
+				type		: "execute",
+				keyTap		: "z"
+			}
+		],
+		[
+			{
+				type		: "require",
+				bodyAction	: "crouch",
+				distanceMin	: "8"
+			},
+			{
+				type		: "execute",
+				keyHold		: "g"
+			}
+		],
+	]
+}
