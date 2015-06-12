@@ -160,7 +160,7 @@ namespace BodyBasicsWPF {
             this.stopwatch = new Stopwatch();
 
             // for Alpha, one sensor is supported
-            this.kinectSensor = KinectSensor.Default;
+            this.kinectSensor = KinectSensor.GetDefault();
 
             if( this.kinectSensor != null ) {
                 // get the coordinate mapper
@@ -291,7 +291,7 @@ namespace BodyBasicsWPF {
             if( this.bodies != null ) {
                 foreach( Body body in this.bodies ) {
                     if( body != null ) {
-                        body.Dispose();
+                        //body.Dispose();
                     }
                 }
             }
@@ -311,7 +311,7 @@ namespace BodyBasicsWPF {
             BodyFrameReference frameReference = e.FrameReference;
               
             if( this.startTime == 0 ) {
-                this.startTime = frameReference.RelativeTime;
+                this.startTime = (long)frameReference.RelativeTime.Seconds;
             }
 
             try {
@@ -334,7 +334,7 @@ namespace BodyBasicsWPF {
                             }
 
                             this.nextStatusUpdate = DateTime.Now + TimeSpan.FromSeconds(1);
-                            this.StatusText = string.Format(Properties.Resources.StandardStatusTextFormat, fps, frameReference.RelativeTime - this.startTime);
+                            this.StatusText = string.Format(Properties.Resources.StandardStatusTextFormat, fps, frameReference.RelativeTime.Seconds - this.startTime);
                             //if( this.DogName == null )
                             //this.DogName = (string)DateTime.Now.ToString(); 
                         }
@@ -545,6 +545,11 @@ namespace BodyBasicsWPF {
                     null,
                     new Rect(this.displayWidth - ClipBoundsThickness, 0, ClipBoundsThickness, this.displayHeight));
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.kari = new UserConfig(this);
         }
 
     }

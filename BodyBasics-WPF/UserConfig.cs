@@ -291,17 +291,19 @@ namespace BodyBasicsWPF {
             int actionSetNum = 0;
 
             InputSimulator typer = new InputSimulator();
+            List<System.Windows.Forms.Keys> vKeyCodesList;
             System.Windows.Forms.Keys vKeyCode;
             JToken jsonToken = null;
-            string keyString = null;
+            string keyStringsBig = null;
             DetectData detectorData = null;
 
             WalkNode( configJsonNodes, item => {
                                 
                 typer = new InputSimulator();
-                vKeyCode = 0;
+                vKeyCode =  0;
+                vKeyCodesList = new List<Keys>();
                 jsonToken = null;
-                keyString = null;
+                keyStringsBig = null;
                 detectorData = null;
 
                 switch (item["bodyAction"].ToString()) {
@@ -315,7 +317,7 @@ namespace BodyBasicsWPF {
                         detectorData.bodyAction = bodyActionTypes.leanRight;
                         detectorData = new ( JointType., JointType. ).make();
                     break;
-
+                        *//*
                     case "leanForward":
                         detectorData.bodyAction = bodyActionTypes.leanForward;
                         detectorData = new ( JointType., JointType. ).make();
@@ -325,7 +327,7 @@ namespace BodyBasicsWPF {
                         detectorData.bodyAction = bodyActionTypes.leanBackward;
                         detectorData = new ( JointType., JointType. ).make();
                     break;
-                    /**/
+                    */
                     case "turnLeft":
                         detectorData = new DetectTurn( bodyActionTypes.turnLeft, JointType.SpineShoulder, JointType.ShoulderRight, actionDetectDirections.positive, actionDetectPlanes.y ).make();
                         break;
@@ -495,56 +497,69 @@ namespace BodyBasicsWPF {
                 jsonToken = item["keyTap"];
                 if (jsonToken != null && jsonToken.Type == JTokenType.String) {
                     detectorData.executeAction = actionExecuteActions.keyTap;
-                    keyString = jsonToken.ToString();
+                    keyStringsBig = jsonToken.ToString();
                 }
                 
                 jsonToken = item["keyHold"];
                 if (jsonToken != null && jsonToken.Type == JTokenType.String) {
                     detectorData.executeAction = actionExecuteActions.keyHold;
-                    keyString = jsonToken.ToString();
+                    keyStringsBig = jsonToken.ToString();
                 }
 
-                switch( keyString ) {
-                    case "a": vKeyCode = Keys.A; break;
-                    case "b": vKeyCode = Keys.B; break;
-                    case "c": vKeyCode = Keys.C; break;
-                    case "d": vKeyCode = Keys.D; break;
-                    case "e": vKeyCode = Keys.E; break;
-                    case "f": vKeyCode = Keys.F; break;
-                    case "g": vKeyCode = Keys.G; break;
-                    case "h": vKeyCode = Keys.H; break;
-                    case "i": vKeyCode = Keys.I; break;
-                    case "j": vKeyCode = Keys.J; break;
-                    case "k": vKeyCode = Keys.K; break;
-                    case "l": vKeyCode = Keys.L; break;
-                    case "m": vKeyCode = Keys.M; break;
-                    case "n": vKeyCode = Keys.N; break;
-                    case "o": vKeyCode = Keys.O; break;
-                    case "p": vKeyCode = Keys.P; break;
-                    case "q": vKeyCode = Keys.Q; break;
-                    case "r": vKeyCode = Keys.R; break;
-                    case "s": vKeyCode = Keys.S; break;
-                    case "t": vKeyCode = Keys.T; break;
-                    case "u": vKeyCode = Keys.U; break;
-                    case "v": vKeyCode = Keys.V; break;
-                    case "w": vKeyCode = Keys.W; break;
-                    case "x": vKeyCode = Keys.X; break;
-                    case "y": vKeyCode = Keys.Y; break;
-                    case "z": vKeyCode = Keys.Z; break;
-                }
-
-                if( vKeyCode != 0 ) {
-                    detectorData.vKeyCode = vKeyCode;
-                }
-
-                readyActionItems.Add( detectorData );
-
-                this.actionSetsStatus[actionSetNum] = false;
                 
-                /*/
-                this.sender.DogName = this.sender.DogName + "\r\n" + item["bodyAction"].ToString();
-                /**/
+                foreach (string keyString in keyStringsBig.Split('/'))
+                {
+                    switch (keyString)
+                    {
+                        case "a": vKeyCode = Keys.A; break;
+                        case "b": vKeyCode = Keys.B; break;
+                        case "c": vKeyCode = Keys.C; break;
+                        case "d": vKeyCode = Keys.D; break;
+                        case "e": vKeyCode = Keys.E; break;
+                        case "f": vKeyCode = Keys.F; break;
+                        case "g": vKeyCode = Keys.G; break;
+                        case "h": vKeyCode = Keys.H; break;
+                        case "i": vKeyCode = Keys.I; break;
+                        case "j": vKeyCode = Keys.J; break;
+                        case "k": vKeyCode = Keys.K; break;
+                        case "l": vKeyCode = Keys.L; break;
+                        case "m": vKeyCode = Keys.M; break;
+                        case "n": vKeyCode = Keys.N; break;
+                        case "o": vKeyCode = Keys.O; break;
+                        case "p": vKeyCode = Keys.P; break;
+                        case "q": vKeyCode = Keys.Q; break;
+                        case "r": vKeyCode = Keys.R; break;
+                        case "s": vKeyCode = Keys.S; break;
+                        case "t": vKeyCode = Keys.T; break;
+                        case "u": vKeyCode = Keys.U; break;
+                        case "v": vKeyCode = Keys.V; break;
+                        case "w": vKeyCode = Keys.W; break;
+                        case "x": vKeyCode = Keys.X; break;
+                        case "y": vKeyCode = Keys.Y; break;
+                        case "z": vKeyCode = Keys.Z; break;
+                        case "left": vKeyCode = Keys.Left; break;
+                        case "right": vKeyCode = Keys.Right; break;
+                        case "up": vKeyCode = Keys.Up; break;
+                        case "down": vKeyCode = Keys.Down; break;
+                    }
 
+                    vKeyCodesList.Add(vKeyCode);
+                }//end for each key
+
+                    if (vKeyCode != 0)
+                    {
+                        detectorData.vKeyCodesList = vKeyCodesList;
+                    }
+
+                    readyActionItems.Add(detectorData);
+
+                    this.actionSetsStatus[actionSetNum] = false;
+
+                    /*/
+                    this.sender.DogName = this.sender.DogName + "\r\n" + item["bodyAction"].ToString();
+                    /**/
+
+                    
                 actionSetNum++;
 
             } );
@@ -768,11 +783,13 @@ namespace BodyBasicsWPF {
                     /**/
                     switch (readyAction.executeAction) {
                         case actionExecuteActions.keyTap:
-                            Keyboard.KeyPress( readyAction.vKeyCode );
+                            foreach(Keys kc in readyAction.vKeyCodesList)
+                            Keyboard.KeyPress( kc );
                         break;
                         case actionExecuteActions.keyHold:
-                            if (this.actionSetsStatus[actionSetNum] == false) {         
-                                Keyboard.KeyDown( readyAction.vKeyCode );
+                            if (this.actionSetsStatus[actionSetNum] == false) {
+                                foreach (Keys kc in readyAction.vKeyCodesList)
+                                Keyboard.KeyDown( kc );
                             }
                         break;
                     }
@@ -781,7 +798,8 @@ namespace BodyBasicsWPF {
                     switch (readyAction.executeAction) {
                         case actionExecuteActions.keyHold:
                             if (this.actionSetsStatus[actionSetNum] == true) {
-                                Keyboard.KeyUp( readyAction.vKeyCode );
+                                foreach (Keys kc in readyAction.vKeyCodesList)
+                                Keyboard.KeyUp( kc );
                                 this.actionSetsStatus[actionSetNum] = false;
                             }
                         break;
@@ -838,7 +856,8 @@ namespace BodyBasicsWPF {
             // TODO: Complete member initialization
             this.sender = mainWindow;
             this.sender.DogName = "user config";
-            this.loadConfig( "sf4-new.json" );
+           this.loadConfig( "sf4-new.json" );
+                        
         }
 
         public void actionsDetect( BodyFrame frame, IReadOnlyDictionary<JointType, Joint> joints, Dictionary<JointType, Point> jointPoints, DrawingContext bodyDraw, DrawingContext actionHistoryDraw ) {

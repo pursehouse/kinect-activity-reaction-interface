@@ -27,7 +27,7 @@ namespace BodyBasicsWPF {
         public int angleMax;
         public int angleMin;
 
-        public System.Windows.Forms.Keys vKeyCode;
+        public List<System.Windows.Forms.Keys> vKeyCodesList;
 
         public DetectData( UserConfig.bodyActionTypes bodyAction, JointType BasePoint, JointType EndPoint, UserConfig.actionDetectDirections direction, UserConfig.actionDetectPlanes plane ) {
             this.jointBase  = BasePoint;
