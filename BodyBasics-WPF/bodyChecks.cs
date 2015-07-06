@@ -153,6 +153,19 @@ namespace BodyBasicsWPF {
             return info.elevation( frame, joints ) > this.distanceMin;
         }
     }
+    public class CheckBothHandsUp : CheckDistanceMinBase
+    {
+        public CheckBothHandsUp(JointType jointBase, JointType jointEnd, float distanceMin)
+            : base(jointBase, jointEnd, distanceMin)
+        {
+        }
+        public bool check(BodyFrame frame, IReadOnlyDictionary<JointType, Joint> joints)
+        {
+            getInfo info = new getInfo();
+            return joints[JointType.HandLeft].Position.Y - joints[JointType.Head].Position.Y > this.distanceMin &&
+            joints[JointType.HandRight].Position.Y - joints[JointType.Head].Position.Y > this.distanceMin;
+        }
+    }
     public class CheckCrouch : CheckDistanceMaxBase {
         public CheckCrouch( JointType jointBase, JointType jointEnd, float distanceMax ) : base( jointBase, jointEnd, distanceMax ) {
         }

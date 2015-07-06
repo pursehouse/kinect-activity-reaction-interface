@@ -69,6 +69,19 @@ namespace BodyBasicsWPF {
             return new DetectData( this.bodyAction, this.jointBase, this.jointEnd, UserConfig.actionDetectDirections.positive, UserConfig.actionDetectPlanes.y );
         }
     }
+
+    public class DetectBothHandsUp : DetectBase
+    {
+        public DetectBothHandsUp(UserConfig.bodyActionTypes bodyAction, JointType jointBase, JointType jointEnd)
+            : base(bodyAction, jointBase, jointEnd, UserConfig.actionDetectDirections.positive, UserConfig.actionDetectPlanes.y)
+        {
+        }
+        public DetectData make()
+        {
+            return new DetectData(this.bodyAction, this.jointBase, this.jointEnd, UserConfig.actionDetectDirections.positive, UserConfig.actionDetectPlanes.y);
+        }
+    }
+
     public class DetectCrouch : DetectBase {
         public DetectCrouch( UserConfig.bodyActionTypes bodyAction, JointType jointBase, JointType jointEnd ) : base( bodyAction, jointBase, jointEnd, UserConfig.actionDetectDirections.negative, UserConfig.actionDetectPlanes.y ) {
         }

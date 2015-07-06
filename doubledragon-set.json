@@ -1,0 +1,72 @@
+[
+	
+	
+	{
+		bodyAction	: "handLeftBackward",
+		distanceMin	: "5",
+		keyHold		: "left/z/x"
+	},
+	{
+		bodyAction	: "handRightBackward",
+		distanceMin	: "5",
+		keyHold		: "right/z/x"
+	},
+	{
+		bodyAction	: "bothHandsUp",
+		distanceMin	: "10",
+		keyHold		: "z/x/x/x"
+	},
+	{
+		bodyAction	: "handLeftForward",
+		distanceMin	: "15",
+		keyHold		: "x"
+	},
+	{
+		bodyAction	: "handRightForward",
+		distanceMin	: "15",
+		keyHold		: "z"
+	},
+	{
+		bodyAction	: "turnLeft",
+		angleMin	: "40",
+		keyHold		: "left"
+	},
+	{
+		bodyAction	: "turnRight",
+		angleMin	: "40",
+		keyHold		: "right"
+	},
+	
+	{
+		bodyAction	: "footRightForward",
+		distanceMin	: "20",
+		keyHold		: "up"
+	},
+
+
+	{
+		bodyAction	: "footLeftForward",
+		distanceMin	: "20",
+		keyHold		: "down"
+	},
+
+
+	{
+		bodyAction	: "footRightOut",
+		distanceMin	: "20",
+		keyHold		: "z"
+	}
+	,
+
+
+	{
+		bodyAction	: "footLeftOut",
+		distanceMin	: "20",
+		keyHold		: "x"
+	}
+
+	
+	
+	
+	
+]

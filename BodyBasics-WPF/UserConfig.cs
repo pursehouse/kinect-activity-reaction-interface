@@ -65,6 +65,7 @@ namespace BodyBasicsWPF {
             BA_HAND_RIGHT_OUT, //    right_arm_out                sideways distance from right hand to shoulder (inches)
             BA_HAND_RIGHT_ACROSS, //    right_arm_across            sideways distance from right hand across body to shoulder (inches)
             BA_HAND_RIGHT_BACKWARD,
+            BA_BOTH_HANDS_UP,
             BA_FOOT_LEFT_FORWARD, //    left_foot_forwards            forward distance from left hip to foot (inches)
             BA_FOOT_LEFT_OUT, //    left_foot_sideways            sideways distance from left hip to foot (inches)
             BA_FOOT_LEFT_BACKWARD, //    left_foot_backwards            backwards distance from left hip to foot (inches)
@@ -194,7 +195,7 @@ namespace BodyBasicsWPF {
             handLeftOut = bodyActions.BA_HAND_LEFT_OUT,
             handLeftAcross = bodyActions.BA_HAND_LEFT_ACROSS,
             handLeftBackward = bodyActions.BA_HAND_LEFT_BACKWARD,
-
+            
             handRightExpand = bodyActions.BA_HAND_RIGHT_EXPAND,
             handRightForward = bodyActions.BA_HAND_RIGHT_FORWARD,
             handRightDown = bodyActions.BA_HAND_RIGHT_DOWN,
@@ -202,6 +203,8 @@ namespace BodyBasicsWPF {
             handRightOut = bodyActions.BA_HAND_RIGHT_OUT,
             handRightAcross = bodyActions.BA_HAND_RIGHT_ACROSS,
             handRightBackward = bodyActions.BA_HAND_RIGHT_BACKWARD,
+
+            bothHandsUp = bodyActions.BA_BOTH_HANDS_UP,
 
             footLeftForward = bodyActions.BA_FOOT_LEFT_FORWARD,
             footLeftOut = bodyActions.BA_FOOT_LEFT_OUT,
@@ -392,6 +395,10 @@ namespace BodyBasicsWPF {
 
                     case "handRightBackward":
                         detectorData = new DetectDistance( bodyActionTypes.handRightBackward, JointType.ShoulderRight, JointType.HandRight, actionDetectDirections.positive, actionDetectPlanes.z ).make();
+                        break;
+
+                    case "bothHandsUp":
+                        detectorData = new DetectBothHandsUp(bodyActionTypes.bothHandsUp, JointType.HandLeft, JointType.HandRight).make();
                         break;
 
                     case "footLeftForward":
@@ -627,6 +634,8 @@ namespace BodyBasicsWPF {
             handRightAcross,
             handRightBackward,
 
+            bothHandsUp,
+
             footLeftForward,
             footLeftOut,
             footLeftBackward,
@@ -714,6 +723,9 @@ namespace BodyBasicsWPF {
                     case bodyActionTypes.jump:
                         detectStatus = new CheckJump( readyAction.jointBase, readyAction.jointEnd, readyAction.distanceMin ).check( frame, joints );
                     break;
+                    case bodyActionTypes.bothHandsUp:
+                    detectStatus = new CheckBothHandsUp(readyAction.jointBase, readyAction.jointEnd, readyAction.distanceMin).check(frame, joints);
+                    break; 
 
                     default:
                         switch (readyAction.detectType) {
@@ -856,8 +868,9 @@ namespace BodyBasicsWPF {
             // TODO: Complete member initialization
             this.sender = mainWindow;
             this.sender.DogName = "user config";
-           this.loadConfig( "sf4-new.json" );
-                        
+          
+            this.loadConfig("doubledragon-set.json");
+            
         }
 
         public void actionsDetect( BodyFrame frame, IReadOnlyDictionary<JointType, Joint> joints, Dictionary<JointType, Point> jointPoints, DrawingContext bodyDraw, DrawingContext actionHistoryDraw ) {
