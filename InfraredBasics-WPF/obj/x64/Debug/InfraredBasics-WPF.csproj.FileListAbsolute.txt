@@ -1,6 +1,7 @@
 D:\work\applications\k\kari.net\bin\x64\Debug\InfraredBasics-WPF.exe.config
 D:\work\applications\k\kari.net\bin\x64\Debug\InfraredBasics-WPF.exe
 D:\work\applications\k\kari.net\bin\x64\Debug\InfraredBasics-WPF.pdb
+D:\work\applications\k\kari.net\InfraredBasics-WPF\obj\x64\Debug\InfraredBasics-WPF.csprojResolveAssemblyReference.cache
 D:\work\applications\k\kari.net\InfraredBasics-WPF\obj\x64\Debug\MainWindow.baml
 D:\work\applications\k\kari.net\InfraredBasics-WPF\obj\x64\Debug\MainWindow.g.cs
 D:\work\applications\k\kari.net\InfraredBasics-WPF\obj\x64\Debug\App.g.cs
@@ -10,4 +11,3 @@ D:\work\applications\k\kari.net\InfraredBasics-WPF\obj\x64\Debug\InfraredBasicsW
 D:\work\applications\k\kari.net\InfraredBasics-WPF\obj\x64\Debug\InfraredBasics-WPF.csproj.GenerateResource.Cache
 D:\work\applications\k\kari.net\InfraredBasics-WPF\obj\x64\Debug\InfraredBasics-WPF.exe
 D:\work\applications\k\kari.net\InfraredBasics-WPF\obj\x64\Debug\InfraredBasics-WPF.pdb
-D:\work\applications\k\kari.net\InfraredBasics-WPF\obj\x64\Debug\InfraredBasics-WPF.csprojResolveAssemblyReference.cache

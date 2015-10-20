@@ -14,6 +14,7 @@ K:\ssdFormatReinstallDownloads\K4W-v2.0-DevPreview1311-Samples\Managed\ColorBasi
 D:\work\applications\k\kari.net\bin\x64\Debug\ColorBasics-WPF.exe.config
 D:\work\applications\k\kari.net\bin\x64\Debug\ColorBasics-WPF.exe
 D:\work\applications\k\kari.net\bin\x64\Debug\ColorBasics-WPF.pdb
+D:\work\applications\k\kari.net\ColorBasics-WPF\obj\x64\Debug\ColorBasics-WPF.csprojResolveAssemblyReference.cache
 D:\work\applications\k\kari.net\ColorBasics-WPF\obj\x64\Debug\MainWindow.baml
 D:\work\applications\k\kari.net\ColorBasics-WPF\obj\x64\Debug\MainWindow.g.cs
 D:\work\applications\k\kari.net\ColorBasics-WPF\obj\x64\Debug\App.g.cs
@@ -23,4 +24,3 @@ D:\work\applications\k\kari.net\ColorBasics-WPF\obj\x64\Debug\ColorBasicsWPF.Pro
 D:\work\applications\k\kari.net\ColorBasics-WPF\obj\x64\Debug\ColorBasics-WPF.csproj.GenerateResource.Cache
 D:\work\applications\k\kari.net\ColorBasics-WPF\obj\x64\Debug\ColorBasics-WPF.exe
 D:\work\applications\k\kari.net\ColorBasics-WPF\obj\x64\Debug\ColorBasics-WPF.pdb
-D:\work\applications\k\kari.net\ColorBasics-WPF\obj\x64\Debug\ColorBasics-WPF.csprojResolveAssemblyReference.cache

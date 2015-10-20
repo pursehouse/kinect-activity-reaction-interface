@@ -1,5 +1,9 @@
+D:\work\applications\k\kari.net\bin\x64\Debug\BodyBasics-WPF.exe.config
 D:\work\applications\k\kari.net\BodyBasics-WPF\obj\x64\Debug\Interop.DXTRANSLib.dll
 D:\work\applications\k\kari.net\BodyBasics-WPF\obj\x64\Debug\BodyBasics-WPF.csproj.ResolveComReference.cache
+D:\work\applications\k\kari.net\bin\x64\Debug\BodyBasics-WPF.exe
+D:\work\applications\k\kari.net\bin\x64\Debug\BodyBasics-WPF.pdb
+D:\work\applications\k\kari.net\BodyBasics-WPF\obj\x64\Debug\BodyBasics-WPF.csprojResolveAssemblyReference.cache
 D:\work\applications\k\kari.net\BodyBasics-WPF\obj\x64\Debug\MainWindow.baml
 D:\work\applications\k\kari.net\BodyBasics-WPF\obj\x64\Debug\MainWindow.g.cs
 D:\work\applications\k\kari.net\BodyBasics-WPF\obj\x64\Debug\App.g.cs
@@ -7,9 +11,5 @@ D:\work\applications\k\kari.net\BodyBasics-WPF\obj\x64\Debug\BodyBasics-WPF_Mark
 D:\work\applications\k\kari.net\BodyBasics-WPF\obj\x64\Debug\BodyBasics-WPF.g.resources
 D:\work\applications\k\kari.net\BodyBasics-WPF\obj\x64\Debug\BodyBasicsWPF.Properties.Resources.resources
 D:\work\applications\k\kari.net\BodyBasics-WPF\obj\x64\Debug\BodyBasics-WPF.csproj.GenerateResource.Cache
-D:\work\applications\k\kari.net\bin\x64\Debug\BodyBasics-WPF.exe.config
-D:\work\applications\k\kari.net\bin\x64\Debug\BodyBasics-WPF.exe
-D:\work\applications\k\kari.net\bin\x64\Debug\BodyBasics-WPF.pdb
 D:\work\applications\k\kari.net\BodyBasics-WPF\obj\x64\Debug\BodyBasics-WPF.exe
 D:\work\applications\k\kari.net\BodyBasics-WPF\obj\x64\Debug\BodyBasics-WPF.pdb
-D:\work\applications\k\kari.net\BodyBasics-WPF\obj\x64\Debug\BodyBasics-WPF.csprojResolveAssemblyReference.cache
