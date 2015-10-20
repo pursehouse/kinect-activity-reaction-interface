@@ -9,7 +9,8 @@ using System.Runtime.InteropServices;
 using System.Diagnostics;
 using InputManager;
 
-namespace BodyBasicsWPF {
+namespace BodyBasicsWPF
+{
 
     using Microsoft.Kinect;
     using System;
@@ -22,9 +23,11 @@ namespace BodyBasicsWPF {
     using WindowsInput;
     using WindowsInput.Native;
 
-    public class UserConfig {
+    public class UserConfig
+    {
 
-        public class readyActionItem {
+        public class readyActionItem
+        {
             public bodyActionTypes bodyAction;
             public actionDetectTypes detectType;
             public float distanceMin;
@@ -40,11 +43,13 @@ namespace BodyBasicsWPF {
             public JointType jointEnd;
         }
 
-        private void MoveCursor( int x, int y ) {
-            Cursor.Position = new System.Drawing.Point( x, y );
+        private void MoveCursor(int x, int y)
+        {
+            Cursor.Position = new System.Drawing.Point(x, y);
         }
 
-        public enum bodyActions {
+        public enum bodyActions
+        {
             BA_LEAN_LEFT = 1, //    lean_left                    inches body lean left
             BA_LEAN_RIGHT, //    lean_right                    inches body lean right
             BA_LEAN_FORWARD, //    lean_forwards                inches body lean forward
@@ -81,7 +86,8 @@ namespace BodyBasicsWPF {
             BA_WALK //    walk                        height of each step above ground when walking in place (inches)
         }
 
-        public enum bodyParts {
+        public enum bodyParts
+        {
             BP_NECK = 1,
             BP_TORSO_UPPER,
             BP_TORSO_LOWER,
@@ -99,7 +105,8 @@ namespace BodyBasicsWPF {
             BP_TARSUS_RIGHT
         }
 
-        public enum actionSetParts {
+        public enum actionSetParts
+        {
             AS_REQUIRE = 1,
             AS_EXECUTE,
             AS_BODY_ACTION,
@@ -136,7 +143,8 @@ namespace BodyBasicsWPF {
             AS_JOINT_PREV_ANGLE_Y
         }
 
-        public enum actionCommandValues {
+        public enum actionCommandValues
+        {
             ACV_MOUSE_LEFT = 1,
             ACV_MOUSE_RIGHT,
 
@@ -153,7 +161,8 @@ namespace BodyBasicsWPF {
             ACV_HAND_EXPAND
         }
 
-        public enum actionPartStrings {
+        public enum actionPartStrings
+        {
             require = actionSetParts.AS_REQUIRE,
             execute = actionSetParts.AS_EXECUTE,
             bodyAction = actionSetParts.AS_BODY_ACTION,
@@ -179,7 +188,8 @@ namespace BodyBasicsWPF {
             windowShow = actionSetParts.AS_WINDOW_SHOW,
         }
 
-        public enum bodyActionStrings {
+        public enum bodyActionStrings
+        {
             leanLeft = bodyActions.BA_LEAN_LEFT,
             leanRight = bodyActions.BA_LEAN_RIGHT,
             leanForward = bodyActions.BA_LEAN_FORWARD,
@@ -195,7 +205,7 @@ namespace BodyBasicsWPF {
             handLeftOut = bodyActions.BA_HAND_LEFT_OUT,
             handLeftAcross = bodyActions.BA_HAND_LEFT_ACROSS,
             handLeftBackward = bodyActions.BA_HAND_LEFT_BACKWARD,
-            
+
             handRightExpand = bodyActions.BA_HAND_RIGHT_EXPAND,
             handRightForward = bodyActions.BA_HAND_RIGHT_FORWARD,
             handRightDown = bodyActions.BA_HAND_RIGHT_DOWN,
@@ -231,10 +241,10 @@ namespace BodyBasicsWPF {
         //public SortedList<int, SortedList<int, SortedList<int, SortedList<int, int>>>> actionSets = new SortedList<int, SortedList<int, SortedList<int, SortedList<int, int>>>>();
 
         public int[][][][] actionSets = new int[][][][] { };
-        
+
         public SortedList<int, bool> actionSetsStatus = new SortedList<int, bool>();
         public List<SortedList<int, bool>> actionSetsStatusHistory = new List<SortedList<int, bool>>();
-        
+
 
         public BodyFrame previousFrame;
         public IReadOnlyDictionary<JointType, Joint> previousJoints;
@@ -249,28 +259,36 @@ namespace BodyBasicsWPF {
         public int cameraAngleTotal = 0;
         public int cameraAngleCount = 0;
 
-        internal partial class DefineConstants {
+        internal partial class DefineConstants
+        {
             public const double PI = 3.1415926535897932384;
         }
 
-        public void main() {
+        public void main()
+        {
         }
 
         public object[] myActions = {
         };
 
-        private void WalkNode( JToken node, Action<JObject> objectAction = null, Action<JProperty> propertyAction = null ) {
-            if (node.Type == JTokenType.Object) {
+        private void WalkNode(JToken node, Action<JObject> objectAction = null, Action<JProperty> propertyAction = null)
+        {
+            if (node.Type == JTokenType.Object)
+            {
                 if (objectAction != null)
-                    objectAction( (JObject)node );
-                foreach (JProperty child in node.Children<JProperty>()) {
+                    objectAction((JObject)node);
+                foreach (JProperty child in node.Children<JProperty>())
+                {
                     if (propertyAction != null)
-                        propertyAction( child );
-                    WalkNode( child.Value, objectAction, propertyAction );
+                        propertyAction(child);
+                    WalkNode(child.Value, objectAction, propertyAction);
                 }
-            } else if (node.Type == JTokenType.Array) {
-                foreach (JToken child in node.Children()) {
-                    WalkNode( child, objectAction, propertyAction );
+            }
+            else if (node.Type == JTokenType.Array)
+            {
+                foreach (JToken child in node.Children())
+                {
+                    WalkNode(child, objectAction, propertyAction);
                 }
             }
         }
@@ -278,10 +296,11 @@ namespace BodyBasicsWPF {
         //public readyActionItem[] readyActionItems;
         public List<DetectData> readyActionItems = new List<DetectData>();
 
-        public void loadConfig( string configFileName ) {
+        public void loadConfig(string configFileName)
+        {
             //this.myActions.Clear();
 
-            string json = File.ReadAllText( configFileName );
+            string json = File.ReadAllText(configFileName);
 
             //JToken token = null;
             //token = n2["type"];
@@ -289,7 +308,7 @@ namespace BodyBasicsWPF {
             this.actionSetsStatus.Clear();
             this.actionSetsStatusHistory.Clear();
 
-            JToken configJsonNodes = JToken.Parse( json );
+            JToken configJsonNodes = JToken.Parse(json);
 
             int actionSetNum = 0;
 
@@ -300,16 +319,19 @@ namespace BodyBasicsWPF {
             string keyStringsBig = null;
             DetectData detectorData = null;
 
-            WalkNode( configJsonNodes, item => {
-                                
+            WalkNode(configJsonNodes, item => {
+
                 typer = new InputSimulator();
-                vKeyCode =  0;
+                vKeyCode = 0;
                 vKeyCodesList = new List<Keys>();
                 jsonToken = null;
                 keyStringsBig = null;
                 detectorData = null;
 
-                switch (item["bodyAction"].ToString()) {
+                System.Diagnostics.Debug.Write("BodyAction: " + item["bodyAction"].ToString());
+
+                switch (item["bodyAction"].ToString())
+                {
                     /*/
                     case "leanLeft":
                         detectorData.bodyAction = bodyActionTypes.leanLeft;
@@ -332,11 +354,11 @@ namespace BodyBasicsWPF {
                     break;
                     */
                     case "turnLeft":
-                        detectorData = new DetectTurn( bodyActionTypes.turnLeft, JointType.SpineShoulder, JointType.ShoulderRight, actionDetectDirections.positive, actionDetectPlanes.y ).make();
+                        detectorData = new DetectTurn(bodyActionTypes.turnLeft, JointType.SpineShoulder, JointType.ShoulderRight, actionDetectDirections.positive, actionDetectPlanes.y).make();
                         break;
 
                     case "turnRight":
-                        detectorData = new DetectTurn( bodyActionTypes.turnRight, JointType.SpineShoulder, JointType.ShoulderLeft, actionDetectDirections.negative, actionDetectPlanes.y ).make();
+                        detectorData = new DetectTurn(bodyActionTypes.turnRight, JointType.SpineShoulder, JointType.ShoulderLeft, actionDetectDirections.negative, actionDetectPlanes.y).make();
                         break;
                     /*/
                     case "handLeftExpand":
@@ -345,27 +367,27 @@ namespace BodyBasicsWPF {
                     break;
                     /**/
                     case "handLeftForward":
-                        detectorData = new DetectDistance( bodyActionTypes.handLeftForward, JointType.ShoulderLeft, JointType.HandLeft, actionDetectDirections.negative, actionDetectPlanes.z ).make();
+                        detectorData = new DetectDistance(bodyActionTypes.handLeftForward, JointType.ShoulderLeft, JointType.HandLeft, actionDetectDirections.negative, actionDetectPlanes.z).make();
                         break;
 
                     case "handLeftDown":
-                        detectorData = new DetectDistance( bodyActionTypes.handLeftDown, JointType.ShoulderLeft, JointType.HandLeft, actionDetectDirections.negative, actionDetectPlanes.y ).make();
+                        detectorData = new DetectDistance(bodyActionTypes.handLeftDown, JointType.ShoulderLeft, JointType.HandLeft, actionDetectDirections.negative, actionDetectPlanes.y).make();
                         break;
 
                     case "handLeftUp":
-                        detectorData = new DetectDistance( bodyActionTypes.handLeftUp, JointType.ShoulderLeft, JointType.HandLeft, actionDetectDirections.positive, actionDetectPlanes.y ).make();
+                        detectorData = new DetectDistance(bodyActionTypes.handLeftUp, JointType.ShoulderLeft, JointType.HandLeft, actionDetectDirections.positive, actionDetectPlanes.y).make();
                         break;
 
                     case "handLeftOut":
-                        detectorData = new DetectDistance( bodyActionTypes.handLeftOut, JointType.ShoulderLeft, JointType.HandLeft, actionDetectDirections.negative, actionDetectPlanes.x ).make();
+                        detectorData = new DetectDistance(bodyActionTypes.handLeftOut, JointType.ShoulderLeft, JointType.HandLeft, actionDetectDirections.negative, actionDetectPlanes.x).make();
                         break;
 
                     case "handLeftAcross":
-                        detectorData = new DetectDistance( bodyActionTypes.handLeftAcross, JointType.ShoulderLeft, JointType.HandLeft, actionDetectDirections.positive, actionDetectPlanes.x ).make();
+                        detectorData = new DetectDistance(bodyActionTypes.handLeftAcross, JointType.ShoulderLeft, JointType.HandLeft, actionDetectDirections.positive, actionDetectPlanes.x).make();
                         break;
 
                     case "handLeftBackward":
-                        detectorData = new DetectDistance( bodyActionTypes.handLeftBackward, JointType.ShoulderLeft, JointType.HandLeft, actionDetectDirections.positive, actionDetectPlanes.z ).make();
+                        detectorData = new DetectDistance(bodyActionTypes.handLeftBackward, JointType.ShoulderLeft, JointType.HandLeft, actionDetectDirections.positive, actionDetectPlanes.z).make();
                         break;
                     /*/
                     case "handRightExpand":
@@ -374,27 +396,27 @@ namespace BodyBasicsWPF {
                     break;
                     /**/
                     case "handRightForward":
-                        detectorData = new DetectDistance( bodyActionTypes.handRightForward, JointType.ShoulderRight, JointType.HandRight, actionDetectDirections.negative, actionDetectPlanes.z ).make();
+                        detectorData = new DetectDistance(bodyActionTypes.handRightForward, JointType.ShoulderRight, JointType.HandRight, actionDetectDirections.negative, actionDetectPlanes.z).make();
                         break;
 
                     case "handRightDown":
-                        detectorData = new DetectDistance( bodyActionTypes.handRightDown, JointType.ShoulderRight, JointType.HandRight, actionDetectDirections.negative, actionDetectPlanes.y ).make();
+                        detectorData = new DetectDistance(bodyActionTypes.handRightDown, JointType.ShoulderRight, JointType.HandRight, actionDetectDirections.negative, actionDetectPlanes.y).make();
                         break;
 
                     case "handRightUp":
-                        detectorData = new DetectDistance( bodyActionTypes.handRightUp, JointType.ShoulderRight, JointType.HandRight, actionDetectDirections.positive, actionDetectPlanes.y ).make();
+                        detectorData = new DetectDistance(bodyActionTypes.handRightUp, JointType.ShoulderRight, JointType.HandRight, actionDetectDirections.positive, actionDetectPlanes.y).make();
                         break;
 
                     case "handRightOut":
-                        detectorData = new DetectDistance( bodyActionTypes.handRightOut, JointType.ShoulderRight, JointType.HandRight, actionDetectDirections.positive, actionDetectPlanes.x ).make();
+                        detectorData = new DetectDistance(bodyActionTypes.handRightOut, JointType.ShoulderRight, JointType.HandRight, actionDetectDirections.positive, actionDetectPlanes.x).make();
                         break;
 
                     case "handRightAcross":
-                        detectorData = new DetectDistance( bodyActionTypes.handRightAcross, JointType.ShoulderRight, JointType.HandRight, actionDetectDirections.negative, actionDetectPlanes.x ).make();
+                        detectorData = new DetectDistance(bodyActionTypes.handRightAcross, JointType.ShoulderRight, JointType.HandRight, actionDetectDirections.negative, actionDetectPlanes.x).make();
                         break;
 
                     case "handRightBackward":
-                        detectorData = new DetectDistance( bodyActionTypes.handRightBackward, JointType.ShoulderRight, JointType.HandRight, actionDetectDirections.positive, actionDetectPlanes.z ).make();
+                        detectorData = new DetectDistance(bodyActionTypes.handRightBackward, JointType.ShoulderRight, JointType.HandRight, actionDetectDirections.positive, actionDetectPlanes.z).make();
                         break;
 
                     case "bothHandsUp":
@@ -402,51 +424,51 @@ namespace BodyBasicsWPF {
                         break;
 
                     case "footLeftForward":
-                        detectorData = new DetectDistance( bodyActionTypes.footLeftForward, JointType.HipLeft, JointType.FootLeft, actionDetectDirections.negative, actionDetectPlanes.z ).make();
+                        detectorData = new DetectDistance(bodyActionTypes.footLeftForward, JointType.HipLeft, JointType.FootLeft, actionDetectDirections.negative, actionDetectPlanes.z).make();
                         break;
 
                     case "footLeftOut":
-                        detectorData = new DetectDistance( bodyActionTypes.footLeftOut, JointType.HipLeft, JointType.FootLeft, actionDetectDirections.negative, actionDetectPlanes.x ).make();
+                        detectorData = new DetectDistance(bodyActionTypes.footLeftOut, JointType.HipLeft, JointType.FootLeft, actionDetectDirections.negative, actionDetectPlanes.x).make();
                         break;
 
                     case "footLeftBackward":
-                        detectorData = new DetectDistance( bodyActionTypes.footLeftBackward, JointType.HipLeft, JointType.FootLeft, actionDetectDirections.positive, actionDetectPlanes.z ).make();
+                        detectorData = new DetectDistance(bodyActionTypes.footLeftBackward, JointType.HipLeft, JointType.FootLeft, actionDetectDirections.positive, actionDetectPlanes.z).make();
                         break;
 
                     case "footLeftUp":
-                        detectorData = new DetectDistance( bodyActionTypes.footLeftUp, JointType.HipLeft, JointType.FootLeft, actionDetectDirections.positive, actionDetectPlanes.y ).make();
+                        detectorData = new DetectDistance(bodyActionTypes.footLeftUp, JointType.HipLeft, JointType.FootLeft, actionDetectDirections.positive, actionDetectPlanes.y).make();
                         break;
 
                     case "footLeftAcross":
-                        detectorData = new DetectDistance( bodyActionTypes.footLeftAcross, JointType.HipLeft, JointType.FootLeft, actionDetectDirections.positive, actionDetectPlanes.x ).make();
+                        detectorData = new DetectDistance(bodyActionTypes.footLeftAcross, JointType.HipLeft, JointType.FootLeft, actionDetectDirections.positive, actionDetectPlanes.x).make();
                         break;
 
                     case "footRightForward":
-                        detectorData = new DetectDistance( bodyActionTypes.footRightForward,JointType.HipRight, JointType.FootRight, actionDetectDirections.negative, actionDetectPlanes.z ).make();
+                        detectorData = new DetectDistance(bodyActionTypes.footRightForward, JointType.HipRight, JointType.FootRight, actionDetectDirections.negative, actionDetectPlanes.z).make();
                         break;
 
                     case "footRightOut":
-                        detectorData = new DetectDistance( bodyActionTypes.footRightOut, JointType.HipRight, JointType.FootRight, actionDetectDirections.positive, actionDetectPlanes.x ).make();
+                        detectorData = new DetectDistance(bodyActionTypes.footRightOut, JointType.HipRight, JointType.FootRight, actionDetectDirections.positive, actionDetectPlanes.x).make();
                         break;
 
                     case "footRightBackward":
-                        detectorData = new DetectDistance( bodyActionTypes.footRightBackward, JointType.HipRight, JointType.FootRight, actionDetectDirections.positive, actionDetectPlanes.z ).make();
+                        detectorData = new DetectDistance(bodyActionTypes.footRightBackward, JointType.HipRight, JointType.FootRight, actionDetectDirections.positive, actionDetectPlanes.z).make();
                         break;
 
                     case "footRightUp":
-                        detectorData = new DetectDistance( bodyActionTypes.footRightUp, JointType.HipRight, JointType.FootRight, actionDetectDirections.positive, actionDetectPlanes.y ).make();
+                        detectorData = new DetectDistance(bodyActionTypes.footRightUp, JointType.HipRight, JointType.FootRight, actionDetectDirections.positive, actionDetectPlanes.y).make();
                         break;
 
                     case "footRightAcross":
-                        detectorData = new DetectDistance( bodyActionTypes.footRightAcross, JointType.HipRight, JointType.FootRight, actionDetectDirections.negative, actionDetectPlanes.x ).make();
+                        detectorData = new DetectDistance(bodyActionTypes.footRightAcross, JointType.HipRight, JointType.FootRight, actionDetectDirections.negative, actionDetectPlanes.x).make();
                         break;
 
                     case "jump":
-                        detectorData = new DetectJump( bodyActionTypes.jump, JointType.FootLeft, JointType.FootRight ).make();
+                        detectorData = new DetectJump(bodyActionTypes.jump, JointType.FootLeft, JointType.FootRight).make();
                         break;
 
                     case "crouch":
-                        detectorData = new DetectCrouch( bodyActionTypes.crouch, JointType.SpineShoulder, JointType.SpineBase ).make();
+                        detectorData = new DetectCrouch(bodyActionTypes.crouch, JointType.SpineShoulder, JointType.SpineBase).make();
                         break;
                     /*/
                     case "walk":
@@ -460,60 +482,79 @@ namespace BodyBasicsWPF {
 
 
                 jsonToken = item["distanceMax"];
-                if (jsonToken != null && jsonToken.Type == JTokenType.String) {
+                if (jsonToken != null && jsonToken.Type == JTokenType.String)
+                {
                     // convert inches to Kinect style float of meter at millimeter level detail
-                    detectorData.distanceMax = (float)( (int)jsonToken * 0.0254 );
+                    detectorData.distanceMax = (float)((int)jsonToken * 0.0254);
                 }
-                
+
                 jsonToken = item["distanceMin"];
-                if (jsonToken != null && jsonToken.Type == JTokenType.String) {
+                if (jsonToken != null && jsonToken.Type == JTokenType.String)
+                {
                     // convert inches to Kinect style float of meter at millimeter level detail
-                    detectorData.distanceMin = (float)( (int)jsonToken * 0.0254 ); 
+                    detectorData.distanceMin = (float)((int)jsonToken * 0.0254);
                 }
-                
+
                 jsonToken = item["angleMax"];
-                if (jsonToken != null && jsonToken.Type == JTokenType.String) {
+                if (jsonToken != null && jsonToken.Type == JTokenType.String)
+                {
                     detectorData.angleMax = (int)jsonToken;
                 }
-                
+
                 jsonToken = item["angleMin"];
-                if (jsonToken != null && jsonToken.Type == JTokenType.String) {
+                if (jsonToken != null && jsonToken.Type == JTokenType.String)
+                {
                     detectorData.angleMin = (int)jsonToken;
                 }
 
 
-                if( detectorData.distanceMax > 0 ) {
-                    if( detectorData.distanceMin > 0 ) {
+                if (detectorData.distanceMax > 0)
+                {
+                    if (detectorData.distanceMin > 0)
+                    {
                         detectorData.detectType = actionDetectTypes.distanceRange;
-                    } else {
+                    }
+                    else
+                    {
                         detectorData.detectType = actionDetectTypes.distanceMax;
                     }
-                } else if( detectorData.distanceMin > 0 ) {
+                }
+                else if (detectorData.distanceMin > 0)
+                {
                     detectorData.detectType = actionDetectTypes.distanceMin;
-                } else if( detectorData.angleMax > 0 ) {
-                    if( detectorData.angleMin > 0 ) {
+                }
+                else if (detectorData.angleMax > 0)
+                {
+                    if (detectorData.angleMin > 0)
+                    {
                         detectorData.detectType = actionDetectTypes.angleRange;
-                    } else {
+                    }
+                    else
+                    {
                         detectorData.detectType = actionDetectTypes.angleMax;
                     }
-                } else if( detectorData.angleMin > 0 ) {
+                }
+                else if (detectorData.angleMin > 0)
+                {
                     detectorData.detectType = actionDetectTypes.angleMin;
                 }
-                                
-                
+
+
                 jsonToken = item["keyTap"];
-                if (jsonToken != null && jsonToken.Type == JTokenType.String) {
+                if (jsonToken != null && jsonToken.Type == JTokenType.String)
+                {
                     detectorData.executeAction = actionExecuteActions.keyTap;
                     keyStringsBig = jsonToken.ToString();
                 }
-                
+
                 jsonToken = item["keyHold"];
-                if (jsonToken != null && jsonToken.Type == JTokenType.String) {
+                if (jsonToken != null && jsonToken.Type == JTokenType.String)
+                {
                     detectorData.executeAction = actionExecuteActions.keyHold;
                     keyStringsBig = jsonToken.ToString();
                 }
 
-                
+
                 foreach (string keyString in keyStringsBig.Split('/'))
                 {
                     switch (keyString)
@@ -553,25 +594,25 @@ namespace BodyBasicsWPF {
                     vKeyCodesList.Add(vKeyCode);
                 }//end for each key
 
-                    if (vKeyCode != 0)
-                    {
-                        detectorData.vKeyCodesList = vKeyCodesList;
-                    }
+                if (vKeyCode != 0)
+                {
+                    detectorData.vKeyCodesList = vKeyCodesList;
+                }
 
-                    readyActionItems.Add(detectorData);
+                readyActionItems.Add(detectorData);
 
-                    this.actionSetsStatus[actionSetNum] = false;
+                this.actionSetsStatus[actionSetNum] = false;
 
-                    /*/
-                    this.sender.DogName = this.sender.DogName + "\r\n" + item["bodyAction"].ToString();
-                    /**/
+                /*/
+                this.sender.DogName = this.sender.DogName + "\r\n" + item["bodyAction"].ToString();
+                /**/
 
-                    
+
                 actionSetNum++;
 
-            } );
+            });
         }
-        
+
         /*/
         [DllImport("user32.dll")]
         public static extern short VkKeyScanEx(char ch, IntPtr dwhkl);
@@ -584,7 +625,8 @@ namespace BodyBasicsWPF {
 
         private InputSimulator typer = new InputSimulator();
 
-        public enum actionDetectTypes {
+        public enum actionDetectTypes
+        {
             distanceMax,
             distanceMin,
             distanceRange,
@@ -593,23 +635,27 @@ namespace BodyBasicsWPF {
             angleRange
         }
 
-        public enum actionDetectDirections {
+        public enum actionDetectDirections
+        {
             negative,
             positive
         }
 
-        public enum actionDetectPlanes {
+        public enum actionDetectPlanes
+        {
             x,
             y,
             z
         }
 
-        public enum actionExecuteActions {
+        public enum actionExecuteActions
+        {
             keyTap,
             keyHold
         }
 
-        public enum bodyActionTypes {
+        public enum bodyActionTypes
+        {
             leanLeft,
             leanRight,
             leanForward,
@@ -654,7 +700,8 @@ namespace BodyBasicsWPF {
         }
 
         int processCount = 0;
-        public void processConfig( BodyFrame frame, IReadOnlyDictionary<JointType, Joint> joints, Dictionary<JointType, Point> jointPoints, DrawingContext bodyDraw, DrawingContext actionHistoryDraw ) {
+        public void processConfig(BodyFrame frame, IReadOnlyDictionary<JointType, Joint> joints, Dictionary<JointType, Point> jointPoints, DrawingContext bodyDraw, DrawingContext actionHistoryDraw)
+        {
 
             this.processCount++;
 
@@ -694,14 +741,15 @@ namespace BodyBasicsWPF {
 
             int actionSetNum = -1;
 
-            this.sender.DogName = 
-                "\r\n" + "detecting : " + 
-                "\r\n" + "head to left : " + ( joints[ JointType.Head ].Position.Y - joints[ JointType.FootLeft ].Position.Y ) + 
-                "\r\n" + "head to right : " + ( joints[ JointType.Head ].Position.Y - joints[ JointType.FootRight ].Position.Y ) + 
+            this.sender.DogName =
+                "\r\n" + "detecting : " +
+                "\r\n" + "head to left : " + (joints[JointType.Head].Position.Y - joints[JointType.FootLeft].Position.Y) +
+                "\r\n" + "head to right : " + (joints[JointType.Head].Position.Y - joints[JointType.FootRight].Position.Y) +
                 "\r\n"
             ;
 
-            foreach ( DetectData readyAction in this.readyActionItems) {
+            foreach (DetectData readyAction in this.readyActionItems)
+            {
                 actionSetNum++;
 
                 detectStatus = false;
@@ -715,47 +763,54 @@ namespace BodyBasicsWPF {
                 ;
                 /**/
 
-                switch (readyAction.bodyAction) {
+                switch (readyAction.bodyAction)
+                {
                     case bodyActionTypes.crouch:
-                        detectStatus = new CheckCrouch( readyAction.jointBase, readyAction.jointEnd, readyAction.distanceMax ).check( frame, joints );
-                    break;
+                        detectStatus = new CheckCrouch(readyAction.jointBase, readyAction.jointEnd, readyAction.distanceMax).check(frame, joints);
+                        break;
 
                     case bodyActionTypes.jump:
-                        detectStatus = new CheckJump( readyAction.jointBase, readyAction.jointEnd, readyAction.distanceMin ).check( frame, joints );
-                    break;
+                        detectStatus = new CheckJump(readyAction.jointBase, readyAction.jointEnd, readyAction.distanceMin).check(frame, joints);
+                        break;
                     case bodyActionTypes.bothHandsUp:
-                    detectStatus = new CheckBothHandsUp(readyAction.jointBase, readyAction.jointEnd, readyAction.distanceMin).check(frame, joints);
-                    break; 
+                        detectStatus = new CheckBothHandsUp(readyAction.jointBase, readyAction.jointEnd, readyAction.distanceMin).check(frame, joints);
+                        break;
 
                     default:
-                        switch (readyAction.detectType) {
+                        switch (readyAction.detectType)
+                        {
                             case actionDetectTypes.distanceMin:
-                                switch (readyAction.direction) {
+                                switch (readyAction.direction)
+                                {
                                     case actionDetectDirections.negative:
-                                        switch (readyAction.plane) {
-                                            case actionDetectPlanes.x: detectStatus = new CheckNegativeDistanceMinX( readyAction.jointBase, readyAction.jointEnd, readyAction.distanceMin ).check( joints ); break;
-                                            case actionDetectPlanes.y: detectStatus = new CheckNegativeDistanceMinY( readyAction.jointBase, readyAction.jointEnd, readyAction.distanceMin ).check( joints ); break;
-                                            case actionDetectPlanes.z: detectStatus = new CheckNegativeDistanceMinZ( readyAction.jointBase, readyAction.jointEnd, readyAction.distanceMin ).check( joints ); break;
+                                        switch (readyAction.plane)
+                                        {
+                                            case actionDetectPlanes.x: detectStatus = new CheckNegativeDistanceMinX(readyAction.jointBase, readyAction.jointEnd, readyAction.distanceMin).check(joints); break;
+                                            case actionDetectPlanes.y: detectStatus = new CheckNegativeDistanceMinY(readyAction.jointBase, readyAction.jointEnd, readyAction.distanceMin).check(joints); break;
+                                            case actionDetectPlanes.z: detectStatus = new CheckNegativeDistanceMinZ(readyAction.jointBase, readyAction.jointEnd, readyAction.distanceMin).check(joints); break;
                                         }
-                                    break;
+                                        break;
 
                                     case actionDetectDirections.positive:
-                                        switch (readyAction.plane) {
-                                            case actionDetectPlanes.x: detectStatus = new CheckPositiveDistanceMinX( readyAction.jointBase, readyAction.jointEnd, readyAction.distanceMin ).check( joints );  break;
-                                            case actionDetectPlanes.y: detectStatus = new CheckPositiveDistanceMinY( readyAction.jointBase, readyAction.jointEnd, readyAction.distanceMin ).check( joints );  break;
-                                            case actionDetectPlanes.z: detectStatus = new CheckPositiveDistanceMinZ( readyAction.jointBase, readyAction.jointEnd, readyAction.distanceMin ).check( joints );  break;
+                                        switch (readyAction.plane)
+                                        {
+                                            case actionDetectPlanes.x: detectStatus = new CheckPositiveDistanceMinX(readyAction.jointBase, readyAction.jointEnd, readyAction.distanceMin).check(joints); break;
+                                            case actionDetectPlanes.y: detectStatus = new CheckPositiveDistanceMinY(readyAction.jointBase, readyAction.jointEnd, readyAction.distanceMin).check(joints); break;
+                                            case actionDetectPlanes.z: detectStatus = new CheckPositiveDistanceMinZ(readyAction.jointBase, readyAction.jointEnd, readyAction.distanceMin).check(joints); break;
                                         }
-                                    break;
+                                        break;
 
                                     default:
                                         return;
                                 }
-                            break;
+                                break;
 
                             case actionDetectTypes.angleMin:
-                                switch (readyAction.direction) {
+                                switch (readyAction.direction)
+                                {
                                     case actionDetectDirections.negative:
-                                        switch (readyAction.plane) {
+                                        switch (readyAction.plane)
+                                        {
                                             case actionDetectPlanes.y:
                                                 /*/
                                                 float point1a = joints[JointType.SpineShoulder].Position.Z;
@@ -765,82 +820,95 @@ namespace BodyBasicsWPF {
                                                 float angle = (float)( Math.Atan2((double)(point1a - point1b), (double)(point2a - point2b)) * 180 / Math.PI );
                                                 this.sender.DogName = point1a + " > " + point1b + " : " + point2a + " > " + point2b + " : " + angle;
                                                 /**/
-                                                detectStatus = new CheckNegativeAngleMinY( readyAction.jointBase, readyAction.jointEnd, readyAction.angleMin ).check( joints );
-                                            break;
+                                                detectStatus = new CheckNegativeAngleMinY(readyAction.jointBase, readyAction.jointEnd, readyAction.angleMin).check(joints);
+                                                break;
                                         }
-                                    break;
+                                        break;
 
                                     case actionDetectDirections.positive:
-                                        switch (readyAction.plane) {
+                                        switch (readyAction.plane)
+                                        {
                                             case actionDetectPlanes.y:
-                                                detectStatus = new CheckPositiveAngleMinY( readyAction.jointBase, readyAction.jointEnd, 180 - readyAction.angleMin ).check( joints );
-                                            break;
+                                                detectStatus = new CheckPositiveAngleMinY(readyAction.jointBase, readyAction.jointEnd, 180 - readyAction.angleMin).check(joints);
+                                                break;
                                         }
-                                    break;
+                                        break;
 
                                     default:
                                         return;
                                 }
-                            break;
+                                break;
 
                             default:
                                 return;
                         }
-                    break;
+                        break;
                 }
 
-                if (detectStatus) {
+                if (detectStatus)
+                {
                     /*/
                     this.sender.DogName = this.sender.DogName + " - ACTIVE";
                     /**/
-                    switch (readyAction.executeAction) {
+                    switch (readyAction.executeAction)
+                    {
                         case actionExecuteActions.keyTap:
-                            foreach(Keys kc in readyAction.vKeyCodesList)
-                            Keyboard.KeyPress( kc );
-                        break;
+                            foreach (Keys kc in readyAction.vKeyCodesList)
+                                Keyboard.KeyPress(kc);
+                            break;
                         case actionExecuteActions.keyHold:
-                            if (this.actionSetsStatus[actionSetNum] == false) {
+                            if (this.actionSetsStatus[actionSetNum] == false)
+                            {
                                 foreach (Keys kc in readyAction.vKeyCodesList)
-                                Keyboard.KeyDown( kc );
+                                    Keyboard.KeyDown(kc);
                             }
-                        break;
+                            break;
                     }
                     this.actionSetsStatus[actionSetNum] = true;
-                } else {
-                    switch (readyAction.executeAction) {
+                }
+                else
+                {
+                    switch (readyAction.executeAction)
+                    {
                         case actionExecuteActions.keyHold:
-                            if (this.actionSetsStatus[actionSetNum] == true) {
+                            if (this.actionSetsStatus[actionSetNum] == true)
+                            {
                                 foreach (Keys kc in readyAction.vKeyCodesList)
-                                Keyboard.KeyUp( kc );
+                                    Keyboard.KeyUp(kc);
                                 this.actionSetsStatus[actionSetNum] = false;
                             }
-                        break;
+                            break;
                     }
                 }
             }
-            
-            Pen drawPen = new Pen( Brushes.Red, 1 );
+
+            Pen drawPen = new Pen(Brushes.Red, 1);
 
             SortedList<int, bool> statusCopy = new SortedList<int, bool>();
-            foreach (int key2 in this.actionSetsStatus.Keys) {
-                statusCopy[ key2 ] = this.actionSetsStatus[key2];
+            foreach (int key2 in this.actionSetsStatus.Keys)
+            {
+                statusCopy[key2] = this.actionSetsStatus[key2];
             }
 
-            if (this.actionSetsStatusHistory.Count() > 500) {
+            if (this.actionSetsStatusHistory.Count() > 500)
+            {
                 this.actionSetsStatusHistory.RemoveAt(0);
             }
-            this.actionSetsStatusHistory.Add( statusCopy );
+            this.actionSetsStatusHistory.Add(statusCopy);
 
             actionHistoryDraw.DrawRectangle(Brushes.Black, null, new Rect(0.0, 0.0, 500, 250));
 
-            int lineHeight = (int)( 250 / this.actionSetsStatus.Count() );
+            int lineHeight = (int)(250 / this.actionSetsStatus.Count());
 
             int historyNum = 0;
-            foreach ( SortedList<int, bool> historySlot in this.actionSetsStatusHistory ) {
+            foreach (SortedList<int, bool> historySlot in this.actionSetsStatusHistory)
+            {
                 historyNum++;
-                foreach ( KeyValuePair<int, bool> historyAction in historySlot ) {
-                    if ( historyAction.Value == true ) {
-                        actionHistoryDraw.DrawLine( drawPen, new Point( historyNum, historyAction.Key * lineHeight ), new Point( historyNum, historyAction.Key * lineHeight + lineHeight  ) );
+                foreach (KeyValuePair<int, bool> historyAction in historySlot)
+                {
+                    if (historyAction.Value == true)
+                    {
+                        actionHistoryDraw.DrawLine(drawPen, new Point(historyNum, historyAction.Key * lineHeight), new Point(historyNum, historyAction.Key * lineHeight + lineHeight));
                     }
                 }
             }
@@ -864,18 +932,20 @@ namespace BodyBasicsWPF {
         public int screenSizeY = 0;
         private MainWindow sender;
 
-        public UserConfig( MainWindow mainWindow ) {
+        public UserConfig(MainWindow mainWindow)
+        {
             // TODO: Complete member initialization
             this.sender = mainWindow;
             this.sender.DogName = "user config";
-          
-            this.loadConfig("doubledragon-set.json");
-            
+
+            this.loadConfig("sf4-set.json");
+
         }
 
-        public void actionsDetect( BodyFrame frame, IReadOnlyDictionary<JointType, Joint> joints, Dictionary<JointType, Point> jointPoints, DrawingContext bodyDraw, DrawingContext actionHistoryDraw ) {
-            
-            this.processConfig( frame, joints, jointPoints, bodyDraw, actionHistoryDraw );
+        public void actionsDetect(BodyFrame frame, IReadOnlyDictionary<JointType, Joint> joints, Dictionary<JointType, Point> jointPoints, DrawingContext bodyDraw, DrawingContext actionHistoryDraw)
+        {
+
+            this.processConfig(frame, joints, jointPoints, bodyDraw, actionHistoryDraw);
 
             this.previousFrame = frame;
             this.previousJoints = joints;
@@ -883,13 +953,14 @@ namespace BodyBasicsWPF {
 
         }
 
-        public int getSkeletonElevation( BodyFrame frame, IReadOnlyDictionary<JointType, Joint> joints ) {
+        public int getSkeletonElevation(BodyFrame frame, IReadOnlyDictionary<JointType, Joint> joints)
+        {
             Vector4 c = frame.FloorClipPlane;
             CameraSpacePoint j = joints[JointType.FootLeft].Position.Y < joints[JointType.FootRight].Position.Y
                 ? joints[JointType.FootLeft].Position
                 : joints[JointType.FootRight].Position
             ;
-            return (int)( j.X * c.X + j.Y * c.Y + j.Z * c.Z + c.W );
+            return (int)(j.X * c.X + j.Y * c.Y + j.Z * c.Z + c.W);
         }
     }
 }
