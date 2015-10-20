@@ -50,7 +50,7 @@ namespace ColorBasicsWPF
         /// <summary>
         /// The time of the first frame received
         /// </summary>
-        private long startTime = 0;
+        private TimeSpan startTime;
 
         /// <summary>
         /// Current status text to display
@@ -81,7 +81,7 @@ namespace ColorBasicsWPF
             this.stopwatch = new Stopwatch();
 
             // for Alpha, one sensor is supported
-            this.kinectSensor = KinectSensor.Default;
+            this.kinectSensor = KinectSensor.GetDefault();
 
             if (this.kinectSensor != null)
             {
@@ -240,7 +240,7 @@ namespace ColorBasicsWPF
         {
             ColorFrameReference frameReference = e.FrameReference;
 
-            if (this.startTime == 0)
+            if (this.startTime == null)
             {
                 this.startTime = frameReference.RelativeTime;
             }

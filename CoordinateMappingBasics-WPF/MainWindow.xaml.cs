@@ -80,7 +80,7 @@ namespace CoordinateMappingBasicsWPF
         /// <summary>
         /// The time of the first frame received
         /// </summary>
-        private long startTime = 0;
+        private TimeSpan startTime;
 
         /// <summary>
         /// Current status text to display
@@ -111,7 +111,7 @@ namespace CoordinateMappingBasicsWPF
             this.stopwatch = new Stopwatch();
 
             // for Alpha, one sensor is supported
-            this.kinectSensor = KinectSensor.Default;
+            this.kinectSensor = KinectSensor.GetDefault();
 
             if (this.kinectSensor != null)
             {
@@ -305,13 +305,13 @@ namespace CoordinateMappingBasicsWPF
                 if (multiSourceFrame != null)
                 {
                     // MultiSourceFrame is IDisposable
-                    using (multiSourceFrame)
-                    {
+                    //using (multiSourceFrame)
+                    //{
                         DepthFrameReference depthFrameReference = multiSourceFrame.DepthFrameReference;
                         ColorFrameReference colorFrameReference = multiSourceFrame.ColorFrameReference;
                         BodyIndexFrameReference bodyIndexFrameReference = multiSourceFrame.BodyIndexFrameReference;
 
-                        if (this.startTime == 0)
+                        if (this.startTime == null)
                         {
                             this.startTime = depthFrameReference.RelativeTime;
                         }
@@ -422,7 +422,7 @@ namespace CoordinateMappingBasicsWPF
                                     depthWidth * this.bytesPerPixel,
                                     0);
                             }
-                        }
+                        //}
                     }
                 }
             }
@@ -453,7 +453,7 @@ namespace CoordinateMappingBasicsWPF
 
                 if (multiSourceFrame != null)
                 {
-                    multiSourceFrame.Dispose();
+                    //multiSourceFrame.Dispose();
                     multiSourceFrame = null;
                 }
             }

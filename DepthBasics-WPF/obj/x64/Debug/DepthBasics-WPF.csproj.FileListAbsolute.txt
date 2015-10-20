@@ -1,6 +1,7 @@
 D:\work\applications\k\kari.net\bin\x64\Debug\DepthBasics-WPF.exe.config
 D:\work\applications\k\kari.net\bin\x64\Debug\DepthBasics-WPF.exe
 D:\work\applications\k\kari.net\bin\x64\Debug\DepthBasics-WPF.pdb
+D:\work\applications\k\kari.net\DepthBasics-WPF\obj\x64\Debug\DepthBasics-WPF.csprojResolveAssemblyReference.cache
 D:\work\applications\k\kari.net\DepthBasics-WPF\obj\x64\Debug\MainWindow.baml
 D:\work\applications\k\kari.net\DepthBasics-WPF\obj\x64\Debug\MainWindow.g.cs
 D:\work\applications\k\kari.net\DepthBasics-WPF\obj\x64\Debug\App.g.cs
@@ -10,4 +11,3 @@ D:\work\applications\k\kari.net\DepthBasics-WPF\obj\x64\Debug\DepthBasicsWPF.Pro
 D:\work\applications\k\kari.net\DepthBasics-WPF\obj\x64\Debug\DepthBasics-WPF.csproj.GenerateResource.Cache
 D:\work\applications\k\kari.net\DepthBasics-WPF\obj\x64\Debug\DepthBasics-WPF.exe
 D:\work\applications\k\kari.net\DepthBasics-WPF\obj\x64\Debug\DepthBasics-WPF.pdb
-D:\work\applications\k\kari.net\DepthBasics-WPF\obj\x64\Debug\DepthBasics-WPF.csprojResolveAssemblyReference.cache
