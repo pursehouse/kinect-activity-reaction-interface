@@ -460,6 +460,7 @@ namespace BodyBasicsWPF {
                         return;
                 }
 
+                detectorData.name = item["bodyAction"].ToString();
 
                 jsonToken = item["distanceMax"];
                 if (jsonToken != null && jsonToken.Type == JTokenType.String) {
@@ -660,53 +661,45 @@ namespace BodyBasicsWPF {
 
             this.processCount++;
 
+            this.sender.DogName = "";
             /*/
             Vector4 floor = frame.FloorClipPlane;
-            CameraSpacePoint neck  = joints[JointType.SpineShoulder].Position;
-            CameraSpacePoint ass   = joints[JointType.SpineBase].Position;
-            CameraSpacePoint foot  = joints[JointType.FootRight].Position;
+            Joint neck  = joints[JointType.SpineShoulder];
+            Joint ass   = joints[JointType.SpineBase];
+            Joint footr = joints[JointType.FootRight];
+            Joint footl = joints[JointType.FootLeft];
+            Joint head  = joints[JointType.Head];
+
+            getInfo info = new getInfo();
 
             this.sender.DogName =
-                "flr x : " + floor.X + "\r\n" +
-                "flr y : " + floor.Y + "\r\n" +
-                "flr z : " + floor.Z + "\r\n" +
-                "flr w : " + floor.W + "\r\n" +
-                "ass x : " + ass.X + "\r\n" +
-                "ass y : " + ass.Y + "\r\n" +
-                "ass z : " + ass.Z + "\r\n" +
-                "fot x : " + foot.X + "\r\n" +
-                "fot y : " + foot.Y + "\r\n" +
-                "fot z : " + foot.Z + "\r\n" +
-                "nek x : " + neck.X + "\r\n" +
-                "nek y : " + neck.Y + "\r\n" +
-                "nek z : " + neck.Z + "\r\n" +
+                         "flr : " + Math.Round(floor.X / 0.0254, 2) + " : " + Math.Round(floor.Y / 0.0254, 2) + " : " + Math.Round(floor.Z / 0.0254, 2) + " : " + floor.W +
+                "\r\n" + "ass : " + Math.Round(ass.Position.X / 0.0254, 2) + " : " + Math.Round(ass.Position.Y / 0.0254, 2) + " : " + Math.Round(ass.Position.Z / 0.0254, 2) +
+                "\r\n" + "fot : " + Math.Round(footr.Position.X / 0.0254, 2) + " : " + Math.Round(footr.Position.Y / 0.0254, 2) + " : " + Math.Round(footr.Position.Z / 0.0254, 2) +
+                "\r\n" + "nek : " + Math.Round(neck.Position.X / 0.0254, 2) + "  : " + Math.Round(neck.Position.Y / 0.0254, 2) + " : " + Math.Round(neck.Position.Z / 0.0254, 2) +
 
-                "foot from floor : " + ((foot.X * floor.X + foot.Y * floor.Y + foot.Z * floor.Z + floor.W) / 0.0254) + "\r\n" +
-                "ass from floor : " + ((ass.X * floor.X + ass.Y * floor.Y + ass.Z * floor.Z + floor.W) / 0.0254) + "\r\n" +
-                "neck from floor : " + ((neck.X * floor.X + neck.Y * floor.Y + neck.Z * floor.Z + floor.W) / 0.0254) + "\r\n" +
-                "ass from neck : " + ((ass.X * neck.X + ass.Y * neck.Y + ass.Z * neck.Z) / 0.0254) + "\r\n" +
-                "neck from ass : " + ((neck.X * ass.X + neck.Y * ass.Y + neck.Z * ass.Z) / 0.0254) + "\r\n" +
-                "neck from foot : " + ((neck.X * foot.X + neck.Y * foot.Y + neck.Z * foot.Z) / 0.0254) + "\r\n" +
-                "ass from foot : " + ((foot.X * ass.X + foot.Y * ass.Y + foot.Z * ass.Z) / 0.0254) + "\r\n" +
+                "\r\n" + "fot fr flr : " + Math.Round( info.distanceFromFloor( floor, footr ) / 0.0254, 2) +
+                "\r\n" + "ass fr flr : " + Math.Round( info.distanceFromFloor(floor, ass) / 0.0254, 2) +
+                "\r\n" + "nek fr flr : " + Math.Round( info.distanceFromFloor(floor, neck) / 0.0254, 2) +
+                
+                "\r\n" + "ass fr nek : " + Math.Round(info.get3dDistance( ass, neck ) / 0.0254, 2) +
+                "\r\n" + "nek fr ass : " + Math.Round(info.get3dDistance(neck, ass) / 0.0254, 2) +
+                "\r\n" + "nek fr fot : " + Math.Round(info.get3dDistance(neck, footr) / 0.0254, 2) +
+                "\r\n" + "ass fr fot : " + Math.Round(info.get3dDistance(ass, footr) / 0.0254, 2) +
+                "\r\n" + "hed to lft : " + (head.Position.Y - footl.Position.Y) +
+                "\r\n" + "hed to rht : " + (head.Position.Y - footr.Position.Y) + 
                 "\r\n"
             ;
             /**/
 
-            bool detectStatus = false;
+            DetectionInfo detectStatus;
 
             int actionSetNum = -1;
-
-            this.sender.DogName = 
-                "\r\n" + "detecting : " + 
-                "\r\n" + "head to left : " + ( joints[ JointType.Head ].Position.Y - joints[ JointType.FootLeft ].Position.Y ) + 
-                "\r\n" + "head to right : " + ( joints[ JointType.Head ].Position.Y - joints[ JointType.FootRight ].Position.Y ) + 
-                "\r\n"
-            ;
-
+            
             foreach ( DetectData readyAction in this.readyActionItems) {
                 actionSetNum++;
 
-                detectStatus = false;
+                detectStatus = new DetectionInfo();
                 /*/
                 this.sender.DogName = this.sender.DogName + "\r\n" + 
                     readyAction.bodyAction + " : " + 
@@ -725,8 +718,9 @@ namespace BodyBasicsWPF {
                     case bodyActionTypes.jump:
                         detectStatus = new CheckJump( readyAction.jointBase, readyAction.jointEnd, readyAction.distanceMin ).check( frame, joints );
                     break;
+
                     case bodyActionTypes.bothHandsUp:
-                    detectStatus = new CheckBothHandsUp(readyAction.jointBase, readyAction.jointEnd, readyAction.distanceMin).check(frame, joints);
+                        detectStatus = new CheckBothHandsUp(readyAction.jointBase, readyAction.jointEnd, readyAction.distanceMin).check( frame, joints );
                     break; 
 
                     default:
@@ -791,34 +785,46 @@ namespace BodyBasicsWPF {
                     break;
                 }
 
-                if (detectStatus) {
-                    /*/
-                    this.sender.DogName = this.sender.DogName + " - ACTIVE";
+
+                if (detectStatus.result) {
+                    /**/
+                    this.sender.DogName = this.sender.DogName + "Y ";
                     /**/
                     switch (readyAction.executeAction) {
                         case actionExecuteActions.keyTap:
-                            foreach(Keys kc in readyAction.vKeyCodesList)
-                            Keyboard.KeyPress( kc );
+                            foreach (Keys kc in readyAction.vKeyCodesList) {
+                                Keyboard.KeyPress(kc);
+                            }
                         break;
                         case actionExecuteActions.keyHold:
                             if (this.actionSetsStatus[actionSetNum] == false) {
-                                foreach (Keys kc in readyAction.vKeyCodesList)
-                                Keyboard.KeyDown( kc );
+                                foreach (Keys kc in readyAction.vKeyCodesList) { 
+                                    Keyboard.KeyDown(kc);
+                                }
                             }
                         break;
                     }
                     this.actionSetsStatus[actionSetNum] = true;
                 } else {
+                    this.sender.DogName = this.sender.DogName + "N ";
                     switch (readyAction.executeAction) {
                         case actionExecuteActions.keyHold:
                             if (this.actionSetsStatus[actionSetNum] == true) {
-                                foreach (Keys kc in readyAction.vKeyCodesList)
-                                Keyboard.KeyUp( kc );
+                                foreach (Keys kc in readyAction.vKeyCodesList) {
+                                    Keyboard.KeyUp(kc);
+                                }
                                 this.actionSetsStatus[actionSetNum] = false;
                             }
                         break;
                     }
                 }
+
+                this.sender.DogName = this.sender.DogName + " : " + readyAction.name;
+
+                this.sender.DogName = this.sender.DogName + " : " + Math.Round(detectStatus.distance / 0.0254, 2);
+
+                this.sender.DogName = this.sender.DogName + "\r\n";
+
             }
             
             Pen drawPen = new Pen( Brushes.Red, 1 );

@@ -3,31 +3,36 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Body Basics"
         Loaded="MainWindow_Loaded"
-        Closing="MainWindow_Closing" Left="0" Top="0" Width="300" Height="700">
+        Closing="MainWindow_Closing" Left="0" Top="0" Width="700" Height="700">
     <Window.Resources>
         <SolidColorBrush x:Key="MediumGreyBrush" Color="#ff6e6e6e" />
         <SolidColorBrush x:Key="KinectPurpleBrush" Color="#ff52318f" />
         <SolidColorBrush x:Key="KinectBlueBrush" Color="#ff00BCF2" />
     </Window.Resources>
-    <Grid Margin="10 0 10 0">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="250" />
-            <RowDefinition Height="250" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Viewbox Grid.Row="0" HorizontalAlignment="Center">
-            <Image Source="{Binding BodyImage}" Stretch="UniformToFill" />
-        </Viewbox>
-        <Viewbox Grid.Row="1" HorizontalAlignment="Stretch">
-            <Image Source="{Binding ActionsHistoryImage}" Stretch="None" Width="500" Height="250" />
-        </Viewbox>
-        <StatusBar Grid.Row="2" HorizontalAlignment="Stretch" Name="statusBar" VerticalAlignment="Bottom" Background="White" Foreground="{StaticResource MediumGreyBrush}">
-            <StatusBarItem Content="{Binding StatusText}" />
+    <Grid Margin="10,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="113*"/>
+            <ColumnDefinition Width="111*"/>
+        </Grid.ColumnDefinitions>
+        <StatusBar HorizontalAlignment="Stretch" x:Name="dogBar" VerticalAlignment="Top" Background="White" Foreground="{StaticResource MediumGreyBrush}" Margin="10,0,-16,10" Grid.Column="1" Height="649">
+            <StatusBarItem Content="{Binding DogName}" FontSize="20" />
         </StatusBar>
-        <StatusBar Grid.Row="3" HorizontalAlignment="Stretch" Name="dogBar" VerticalAlignment="Bottom" Background="White" Foreground="{StaticResource MediumGreyBrush}">
-            <StatusBarItem Content="{Binding DogName}" />
-        </StatusBar>
-        <Button Content="Reload cfg" HorizontalAlignment="Left" Margin="88,30,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="250" />
+                <RowDefinition Height="250" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Viewbox Grid.Row="0" HorizontalAlignment="Center">
+                <Image Source="{Binding BodyImage}" Stretch="UniformToFill" />
+            </Viewbox>
+            <Viewbox Grid.Row="1" HorizontalAlignment="Stretch" Margin="0,24,0,-150" Grid.RowSpan="2">
+                <Image Source="{Binding ActionsHistoryImage}" Stretch="None" Width="503" Height="545" />
+            </Viewbox>
+            <StatusBar Grid.Row="2" HorizontalAlignment="Stretch" x:Name="statusBar" VerticalAlignment="Bottom" Background="White" Foreground="{StaticResource MediumGreyBrush}">
+                <StatusBarItem Content="{Binding StatusText}" />
+            </StatusBar>
+            <Button Content="Reload cfg" HorizontalAlignment="Left" Margin="88,2,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        </Grid>
     </Grid>
 </Window>

@@ -26,6 +26,7 @@ namespace BodyBasicsWPF {
         public float distanceMin;
         public int angleMax;
         public int angleMin;
+        public string name;
 
         public List<System.Windows.Forms.Keys> vKeyCodesList;
 
@@ -69,19 +70,13 @@ namespace BodyBasicsWPF {
             return new DetectData( this.bodyAction, this.jointBase, this.jointEnd, UserConfig.actionDetectDirections.positive, UserConfig.actionDetectPlanes.y );
         }
     }
-
-    public class DetectBothHandsUp : DetectBase
-    {
-        public DetectBothHandsUp(UserConfig.bodyActionTypes bodyAction, JointType jointBase, JointType jointEnd)
-            : base(bodyAction, jointBase, jointEnd, UserConfig.actionDetectDirections.positive, UserConfig.actionDetectPlanes.y)
-        {
+    public class DetectBothHandsUp : DetectBase {
+        public DetectBothHandsUp(UserConfig.bodyActionTypes bodyAction, JointType jointBase, JointType jointEnd) : base(bodyAction, jointBase, jointEnd, UserConfig.actionDetectDirections.positive, UserConfig.actionDetectPlanes.y ) {
         }
-        public DetectData make()
-        {
+        public DetectData make() {
             return new DetectData(this.bodyAction, this.jointBase, this.jointEnd, UserConfig.actionDetectDirections.positive, UserConfig.actionDetectPlanes.y);
         }
     }
-
     public class DetectCrouch : DetectBase {
         public DetectCrouch( UserConfig.bodyActionTypes bodyAction, JointType jointBase, JointType jointEnd ) : base( bodyAction, jointBase, jointEnd, UserConfig.actionDetectDirections.negative, UserConfig.actionDetectPlanes.y ) {
         }
@@ -97,5 +92,4 @@ namespace BodyBasicsWPF {
         }
 
     }
-    
 }
